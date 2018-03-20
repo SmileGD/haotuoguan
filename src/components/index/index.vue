@@ -12,7 +12,6 @@
 
 <script>
   import Swiper from 'swiper/dist/js/swiper.min.js';
-  // import Swiper from 'swiper';
   import 'swiper/dist/css/swiper.min.css';
   import a from './m-banner01.png';
   import b from './m-banner02.png';
@@ -65,7 +64,11 @@
         height: 100%;
       }
     }
-
+    .swiper-pagination {
+      width: .5rem;
+      height: .5rem;
+      color: #00f;
+    }
     .swiper-pagination-bullet {
       width: 0.833rem;
       height: 0.833rem;
