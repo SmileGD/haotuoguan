@@ -1,79 +1,288 @@
 <template>
-  <div class="index">
-    <div class="swiper-container">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="banner in banners" :style="{ backgroundImage: 'url(' + banner.url + ')' }">
-        </div>
-      </div>
-      <div class="swiper-pagination swiper-pagination-white"></div>
-    </div>
-  </div>
+	<div class="index">
+
+		<div class="swiper-container">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide" v-for="banner in banners">
+					<img :src="banner.url" alt="">
+				</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+
+		<div class="student-basic clearfix">
+			<h1 class="basic-header">{{user.campus}}-{{user.org_name}}</h1>
+			<router-link class="student-info" to="/mine">
+				<img :src="user.user_avator" class="student-avator">
+				<h3 class="student-name">{{user.user_name}}</h3>
+				<img src="./ic_particulars.png" alt="" class="student-detail">
+			</router-link>
+			<router-link to="/" class="integral">
+				<div id="score01" class="integral-item">
+					积分 :
+					<span>{{user.user_integral}}</span>
+				</div>
+				<div id="score02" class="integral-item">
+					累计 :
+					<span>{{user.user_total_integral}}</span>
+				</div>
+				<div id="score03" class="integral-item">
+					校区排名 :
+					<span>{{user.user_ranking}}</span>
+				</div>
+				<img src="./ic_more.png" alt="更多信息" class="integral-more">
+			</router-link>
+		</div>
+
+		<ul class="student-record clearfix">
+			<li class="record-item" v-for="item in record">
+				<a :href="item.url">
+					<img :src="item.imgUrl" class="item-img" :alt="item.title">
+					<div class="item-text">
+						<p class="item-text-title" v-html="item.title"></p>
+						<p class="item-text-cont" v-html="item.text"></p>
+					</div>
+				 </a>
+			</li>
+		</ul>
+	</div>
 </template>
 
 <script>
-  import Swiper from 'swiper/dist/js/swiper.min.js';
-  import 'swiper/dist/css/swiper.min.css';
-  import a from './m-banner01.png';
-  import b from './m-banner02.png';
-  export default {
-    data(){
-      return {
-        banners:[
-          {url:a},
-          {url:b}
-        ]
-      }
-    },
-    mounted(){
-      let swiper = new Swiper('.swiper-container',{
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        loop: true,
-        speed: 600,
-        autoplay: true,
-        onTouchEnd: function() {
-          swiper.startAutoplay();
-        }
-      })
-    }
-  }
+	import Swiper from 'swiper/dist/js/swiper.min.js';
+	import 'swiper/dist/css/swiper.min.css';
+	import banner_a from './m-banner01.png';
+	import banner_b from './m-banner02.png';
+	import record_1 from './ic_1.png';
+	import record_2 from './ic_2.png';
+	import record_3 from './ic_3.png';
+	import record_4 from './ic_4.png';
+	import record_5 from './ic_5.png';
+	import record_6 from './ic_6.png';
+
+	const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
+	const ERR_CODE = 1;
+
+	export default {
+		data() {
+			return {
+				banners: [
+					{url: banner_a},
+					{url: banner_b}
+				],
+				record: [
+					{title: '签到记录', text: '实时掌握孩子位置', url: '#', imgUrl: record_1},
+					{title: '请个小假', text: '了解孩子出勤情况', url: '#', imgUrl: record_2},
+					{title: '校园食谱', text: '关注孩子饮食健康', url: '#', imgUrl: record_3},
+					{title: '成长时光', text: '伴随孩子成长时光', url: '#', imgUrl: record_4},
+					{title: '校园监控', text: '了解孩子校区动态', url: '#', imgUrl: record_5},
+					{title: '基因检测', text: '', url: '#', imgUrl: record_6}
+				],
+				user:{}
+			}
+		},
+
+		methods: {
+			swiper () {
+				new Swiper('.swiper-container', {
+					pagination: '.swiper-pagination',
+					paginationClickable: true,
+					loop: true,
+					speed: 600,
+					autoplay: true,
+					onTouchEnd: function () {
+						swiper.startAutoplay();
+					}
+				})
+			}
+		},
+
+		created(){
+			this.$http.post(URL+'/weixin_api/get_home_info').then((response) => {
+				response = response.body;
+				if(response.code == ERR_CODE) {
+					this.user = response.data;
+				}
+			})
+		},
+
+		mounted() {
+			this.swiper();
+		}
+	}
 </script>
 
 <style scoped lang="less">
-  .index {
-    padding-bottom: 3.6rem;
-  }
+	.index {
+		padding-bottom: 3rem;
+	}
 
-  .swiper-container {
-    width: 100%;
-    height: 8.5rem;
+	.swiper-container {
+		width: 100%;
+		height: 8.5rem;
 
-    .swiper-wrapper {
-      width: 100%;
-      height: 100%;
-    }
+		.swiper-wrapper {
+			width: 100%;
+			height: 100%;
+		}
 
-    .swiper-slide {
-      background-position: center;
-      background-size: cover;
-      width: 100%;
-      height: 100%;
+		.swiper-slide {
+			background-position: center;
+			background-size: cover;
+			width: 100%;
+			height: 100%;
 
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-    .swiper-pagination {
-      width: .5rem;
-      height: .5rem;
-      color: #00f;
-    }
-    .swiper-pagination-bullet {
-      width: 0.833rem;
-      height: 0.833rem;
-      display: inline-block;
-      background: #7c5e53;
-    }
-  }
+			img {
+				width: 100%;
+				height: 100%;
+			}
+		}
+
+		.swiper-pagination {
+			width: .5rem;
+			height: .5rem;
+			color: #00f;
+		}
+
+		.swiper-pagination-bullet {
+			width: 0.833rem;
+			height: 0.833rem;
+			display: inline-block;
+			background: #7c5e53;
+		}
+	}
+
+	.student-basic {
+		box-sizing: border-box;
+		width: 17.4rem;
+		margin: .55rem .6rem;
+		background: #fff;
+
+		.basic-header {
+			height: 2.5rem;
+			line-height: 2.5rem;
+			font-size: .9rem;
+			font-weight: bold;
+			color: #333;
+			text-align: center;
+			border-bottom: 2px solid #f0f0f0;
+		}
+}
+
+	.student-info {
+		position: relative;
+		display: block;
+		height: 3.75rem;
+		line-height: 3.75rem;
+		border-bottom: 2px solid #f0f0f0;
+
+		.student-avator {
+			width: 3.05rem;
+			height: 3.05rem;
+			float: left;
+			margin: .3rem .65rem 0;
+			border-radius: 50%;
+		}
+
+		.student-name {
+			font-size: .9rem;
+			color: #333;
+		}
+
+		.student-detail {
+			position: absolute;
+			right: .65rem;
+			top: 50%;
+			width: .9rem;
+			height: .9rem;
+			margin-top: -.45rem;
+		}
+	}
+
+	.integral {
+		position: relative;
+		display: block;
+		height: 2.5rem;
+		padding: 0 1.3rem 0 .65rem;
+		line-height: 2.5rem;
+		font-size: 0;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
+		.integral-item {
+			display: inline-block;
+			font-size: .75rem;
+			color: #333;
+			margin-right: .5rem;
+		}
+
+		.integral-more {
+			position: absolute;
+			right: .9rem;
+			top: 50%;
+			height: .7rem;
+			margin-top: -.35rem;
+		}
+	}
+
+	.student-record {
+
+		box-sizing: border-box;
+		width: 100%;
+		padding: 0 .6rem;
+		margin-top: .5rem;
+	}
+
+	.record-item {
+		float: left;
+		width: 8.4rem;
+		height: 3.75rem;
+		margin-bottom: .5rem;
+		border-radius: .25rem;
+		background: #fff;
+
+		.item-img {
+			float: left;
+			width: 1.55rem;
+			height: 1.55rem;
+			margin: 1.1rem .5rem 0 .9rem;
+		}
+
+		.item-text {
+			float: left;
+			margin-top: 1.05rem;
+		}
+
+		.item-text-title {
+			margin-bottom: .4rem;
+			font-size: .75rem;
+			color: #333;
+		}
+
+		.item-text-cont {
+			width: 5rem;
+			font-size: .6rem;
+			color: #b7b7b7;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.record-item:nth-child(2n) {
+		margin-left: .5rem;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
 </style>

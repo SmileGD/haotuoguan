@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import vueResource from 'vue-resource';
 
 import index from '../components/index/index'
 import dymanic from '../components/dymanic/dymanic'
@@ -7,6 +8,7 @@ import campus from '../components/campus/campus'
 import mine from '../components/mine/mine'
 
 Vue.use(Router)
+Vue.use(vueResource)
 
 export default new Router({
   routes: [
