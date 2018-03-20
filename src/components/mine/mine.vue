@@ -33,7 +33,7 @@
 
 		<ul class="opt-list">
 			<li class="opt-item" v-for="opt in options">
-				<router-link :to="opt.url">
+				<router-link :to="opt.url" class="link">
 					<img :src="opt.imgUrl" class="opt-img">
 					<span class="opt-text">{{opt.text}}</span>
 				</router-link>
@@ -178,6 +178,12 @@
 			height: 1.5rem;
 			margin: .5rem .5rem 0 .65rem;
 			vertical-align: top;
+		}
+
+		.link {
+			display: block;
+			width: 100%;
+			height: 1.5rem;
 		}
 
 		.opt-text {
