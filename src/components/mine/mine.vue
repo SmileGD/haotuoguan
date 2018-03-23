@@ -3,7 +3,7 @@
 		<div class="student-basic clearfix">
 			<h1 class="basic-header">{{user.campus}}-{{user.org_name}}</h1>
 
-			<router-link class="student-info" to="/mine">
+			<div class="student-info">
 				<img :src="user.user_avator" class="student-avator">
 				<div class="student-desc">
 					<h3 class="student-name">{{user.user_name}}</h3>
@@ -12,7 +12,7 @@
 						<span> {{user.grade}}</span>
 					</div>
 				</div>
-			</router-link>
+			</div>
 
 			<router-link to="/" class="integral">
 				<div id="score01" class="integral-item">
@@ -64,7 +64,7 @@
 				}
 			},
 			created(){
-				this.$http.post(URL+'/weixin_api/get_home_info').then((response) => {
+				this.$http.post(URL+'/weixin_api/get_user_info').then((response) => {
 				response = response.body;
 				if(response.code == ERR_CODE) {
 					this.user = response.data;

@@ -6,8 +6,8 @@
 				<div class="swiper-slide" v-for="banner in banners">
 					<img :src="banner.url" alt="">
 				</div>
-				<div class="swiper-pagination"></div>
 			</div>
+			<div class="swiper-pagination"></div>
 		</div>
 
 		<div class="student-basic clearfix">
@@ -36,13 +36,13 @@
 
 		<ul class="student-record clearfix">
 			<li class="record-item" v-for="item in record">
-				<a :href="item.url">
+				<router-link :to="{name:item.url,params: {user: user}}">
 					<img :src="item.imgUrl" class="item-img" :alt="item.title">
 					<div class="item-text">
 						<p class="item-text-title" v-html="item.title"></p>
 						<p class="item-text-cont" v-html="item.text"></p>
 					</div>
-				 </a>
+				 </router-link>
 			</li>
 		</ul>
 	</div>
@@ -51,6 +51,7 @@
 <script>
 	import Swiper from 'swiper/dist/js/swiper.min.js';
 	import 'swiper/dist/css/swiper.min.css';
+
 	import banner_a from './m-banner01.png';
 	import banner_b from './m-banner02.png';
 	import record_1 from './ic_1.png';
@@ -71,34 +72,21 @@
 					{url: banner_b}
 				],
 				record: [
-					{title: '签到记录', text: '实时掌握孩子位置', url: '#', imgUrl: record_1},
-					{title: '请个小假', text: '了解孩子出勤情况', url: '#', imgUrl: record_2},
-					{title: '校园食谱', text: '关注孩子饮食健康', url: '#', imgUrl: record_3},
-					{title: '成长时光', text: '伴随孩子成长时光', url: '#', imgUrl: record_4},
-					{title: '校园监控', text: '了解孩子校区动态', url: '#', imgUrl: record_5},
-					{title: '基因检测', text: '', url: '#', imgUrl: record_6}
+					{title: '签到记录', text: '实时掌握孩子位置', url: 'signIn', imgUrl: record_1},
+					{title: '请个小假', text: '了解孩子出勤情况', url: 'leave', imgUrl: record_2},
+					{title: '校园食谱', text: '关注孩子饮食健康', url: 'recipes', imgUrl: record_3},
+					{title: '校园监控', text: '了解孩子校区动态', url: 'monitor', imgUrl: record_5},
+					{title: '基因检测', text: '', url: 'geneTest', imgUrl: record_6}
 				],
 				user:{}
 			}
 		},
 
 		methods: {
-			swiper () {
-				new Swiper('.swiper-container', {
-					pagination: '.swiper-pagination',
-					paginationClickable: true,
-					loop: true,
-					speed: 600,
-					autoplay: true,
-					onTouchEnd: function () {
-						swiper.startAutoplay();
-					}
-				})
-			}
 		},
 
 		created(){
-			this.$http.post(URL+'/weixin_api/get_home_info').then((response) => {
+			this.$http.post(URL+'/weixin_api/get_user_info').then((response) => {
 				response = response.body;
 				if(response.code == ERR_CODE) {
 					this.user = response.data;
@@ -107,7 +95,21 @@
 		},
 
 		mounted() {
-			this.swiper();
+			let swiper = new Swiper('.swiper-container', {
+				loop: true,
+				speed: 600,
+				autoplay: {
+					delay: 3000,
+					disableOnInteraction: false
+				},
+				pagination: {
+					el: '.swiper-pagination',
+					clickable: true
+				},
+				onTouchEnd: function () {
+					swiper.startAutoplay();
+				}
+			})
 		}
 	}
 </script>
@@ -139,18 +141,26 @@
 		}
 
 		.swiper-pagination {
-			width: .5rem;
-			height: .5rem;
-			color: #00f;
-		}
-
-		.swiper-pagination-bullet {
-			width: 0.833rem;
-			height: 0.833rem;
-			display: inline-block;
-			background: #7c5e53;
-		}
+			font-size: 0;
 	}
+				
+			.swiper-pagination-bullet {
+				display: inline-block;
+				width: .4rem;
+				height: .4rem;
+				border: 1px solid #fff;
+				border-radius: 50%;
+			}
+
+			.swiper-pagination-bullet-active {
+				display: inline-block;
+				width: .4rem;
+				height: .4rem;
+				background: #fff;
+				border: 1px solid #fff;
+				border-radius: 50%;
+			}
+		}
 
 	.student-basic {
 		box-sizing: border-box;
@@ -273,16 +283,5 @@
 	.record-item:nth-child(2n) {
 		margin-left: .5rem;
 	}
-
-
-
-
-
-
-
-
-
-
-
 
 </style>

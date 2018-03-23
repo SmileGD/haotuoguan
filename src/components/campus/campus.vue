@@ -4,10 +4,10 @@
 		<div class="swiper-container org-home-swiper">
 			<div class="swiper-wrapper">
 				<div class="swiper-slide" v-for="banner in banners">
-					<img :src="banner">
+					<img :src="banner" alt="">
 				</div>
-				<div class="swiper-pagination"></div>
 			</div>
+			<div class="swiper-pagination"></div>
 		</div>
 
 		<!--校区-->
@@ -85,13 +85,18 @@
 		},
 
 		methods: {
-			swiper () {
+			mySwiper(){
 				new Swiper('.swiper-container', {
-					pagination: '.swiper-pagination',
-					paginationClickable: true,
 					loop: true,
-					speed: 600,
-					autoplay: true,
+					speed: 400,
+					autoplay: {
+						delay:3000,
+						disableOnInteraction: false
+					},
+					pagination: {
+						el: '.swiper-pagination',
+						clickable: true
+					},
 					onTouchEnd: function () {
 						swiper.startAutoplay();
 					}
@@ -113,12 +118,13 @@
 					this.env_imgs = this.campus.env_imgs;
 					this.lic_imgs = this.campus.licence_imgs;
 					this.getFiveTeacher();
+
+					this.$nextTick(function(){
+						this.mySwiper();
+					})
+
 				}
 			})
-		},
-
-		mounted() {
-			this.swiper();
 		}
 	}
 </script>
@@ -133,30 +139,35 @@
 		width: 100%;
 		height: 9.5rem;
 
-		img {
-			width: 100%;
-			height: 100%;
-		}
-
 		.swiper-wrapper {
 			width: 100%;
 			height: 100%;
 		}
 
-		.swiper-pagination-bullet {
-			width: .6rem;
-			height: .6rem;
-			background: url("./ic_square1.png");
-			background-size: .6rem .6rem;
+		img {
+			width: 100%;
+			height: 100%;
 		}
 
-		.swiper-pagination-bullet-active {
-			width: .6rem;
-			height: .6rem;
-			background: url("./ic_square.png");
-			background-size: .6rem .6rem;
+		.swiper-pagination {
+			width: 100%;
+
+			.swiper-pagination-bullet {
+				width: .6rem;
+				height: .6rem;
+				background: url("./ic_square1.png");
+				background-size: .6rem .6rem;
+			}
+
+			.swiper-pagination-bullet-active {
+				width: .6rem;
+				height: .6rem;
+				background: url("./ic_square.png");
+				background-size: .6rem .6rem;
+			}
 		}
 	}
+
 
 	.school-wrapper {
 		background: #fff;
