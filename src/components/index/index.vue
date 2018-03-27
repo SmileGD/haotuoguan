@@ -13,22 +13,22 @@
 		<div class="student-basic clearfix">
 			<h1 class="basic-header">{{user.campus}}-{{user.org_name}}</h1>
 			<router-link class="student-info" to="/mine">
-				<img :src="user.user_avator" class="student-avator">
-				<h3 class="student-name">{{user.user_name}}</h3>
+				<img :src="user.avator" class="student-avator">
+				<h3 class="student-name">{{user.name}}</h3>
 				<img src="./ic_particulars.png" alt="" class="student-detail">
 			</router-link>
 			<router-link to="/" class="integral">
 				<div id="score01" class="integral-item">
 					积分 :
-					<span>{{user.user_integral}}</span>
+					<span>{{user.integral}}</span>
 				</div>
 				<div id="score02" class="integral-item">
 					累计 :
-					<span>{{user.user_total_integral}}</span>
+					<span>{{user.total_integral}}</span>
 				</div>
 				<div id="score03" class="integral-item">
 					校区排名 :
-					<span>{{user.user_ranking}}</span>
+					<span>{{user.ranking}}</span>
 				</div>
 				<img src="./ic_more.png" alt="更多信息" class="integral-more">
 			</router-link>
@@ -52,8 +52,8 @@
 	import Swiper from 'swiper/dist/js/swiper.min.js';
 	import 'swiper/dist/css/swiper.min.css';
 
-	import banner_a from './m-banner01.png';
-	import banner_b from './m-banner02.png';
+	import banner_a from './m-banner01.jpg';
+	import banner_b from './m-banner02.jpg';
 	import record_1 from './ic_1.png';
 	import record_2 from './ic_2.png';
 	import record_3 from './ic_3.png';
@@ -164,7 +164,6 @@
 
 	.student-basic {
 		box-sizing: border-box;
-		width: 17.4rem;
 		margin: .55rem .6rem;
 		background: #fff;
 
@@ -246,7 +245,7 @@
 
 	.record-item {
 		float: left;
-		width: 8.4rem;
+		width: 8.3rem;
 		height: 3.75rem;
 		margin-bottom: .5rem;
 		border-radius: .25rem;

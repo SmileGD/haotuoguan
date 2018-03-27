@@ -18,16 +18,16 @@
 				我的
 			</router-link>
 		</div>
-		<!--内容   -->
+		<!-- 内容 -->
 		<keep-alive>
 			<router-view></router-view>
-		</keep-alive>
+		</keep-alive> 
 	</div>
 </template>
 
 <script>
 	export default {
-		name: 'App'
+		name: 'App',
 	}
 </script>
 

@@ -26,7 +26,7 @@
 					<img :src="com_img" class="com-img">
 				</a>
 				<transition name="slide">
-					<ul class="com-list" v-show="item.comments.length">
+					<ul class="com-list" v-show="item.comments.length && fold">
 						<li class="com-item" v-for="com in item.comments">
 							<div class="name">{{com.name}}:</div>
 							<div class="comment">{{com.text}}</div>
@@ -51,8 +51,13 @@
 			return {
 				top_img: top_img,
 				com_img: com_img,
-				times: []
+				times: [],
+				fold: false
 			};
+		},
+
+		computed: {
+
 		},
 
 		methods: {
@@ -224,14 +229,5 @@
 			}
 		}
 
-		.slide-enter-active,
-		.slide-leave-active {
-			transition: opacity .5s;
-		}
-
-		.slide-enter,
-		.slide-leave-to{
-			opacity: 0;
-		}
 	}
 </style>

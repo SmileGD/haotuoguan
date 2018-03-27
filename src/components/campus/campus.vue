@@ -29,7 +29,7 @@
 			<div class="teachers clearfix">
 				<div class="text">
 					教学师资
-					<a class="more" href="#">更多</a>
+					<router-link class="more" to="/teacherIntro">更多</router-link>
 				</div>
 				<ul class="teacher-list">
 					<li class="teacher-item" v-for="teacher in teachers">
@@ -305,7 +305,7 @@
 		.pic-item {
 			float: left;
 			height: 3.4rem;
-			margin: 0 .1rem .1rem;
+			margin: 0 .1rem .2rem;
 		}
 
 		.auto-width {
@@ -332,7 +332,7 @@
 
 		.licence-item {
 			float: left;
-			width: 5.9rem;
+			width: 5.8rem;
 			height: 4.7rem;
 			margin: 0 .2rem .2rem 0;
 
@@ -342,7 +342,7 @@
 		}
 
 		.licence-img {
-			width: 5.9rem;
+			width: 5.8rem;
 			height: 4.7rem;
 		}
 	}

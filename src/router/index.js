@@ -12,6 +12,10 @@ import leave from '../components/leave/leave'
 import recipes from '../components/recipes/recipes'
 import monitor from '../components/monitor/monitor'
 import geneTest from '../components/geneTest/geneTest'
+import teacherIntro from "../components/teacherIntro/teacherIntro"
+import personal from '../components/personal/personal'
+import modifyPwd from '../components/modifyPwd/modifyPwd'
+import change from '../components/change/change'
 
 
 Vue.use(Router)
@@ -37,6 +41,14 @@ export default new Router({
     //校园监控
     {path: '/monitor', name: 'monitor', component: monitor},
     //基因检测
-    {path: '/geneTest', name: 'geneTest', component: geneTest}
+    {path: '/geneTest', name: 'geneTest', component: geneTest},
+    //教室介绍
+    {path: '/teacherIntro', name: 'teacherIntro', component: teacherIntro},
+    //修改个人信息
+    {path: '/personal', name: 'personal', component: personal},
+    //修改密码
+    {path: '/modifyPwd', name: 'modifyPwd', component: modifyPwd},
+    //切换页面
+    {path: '/change', name: "change", component: change}
   ]
 })

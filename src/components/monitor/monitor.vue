@@ -2,8 +2,8 @@
 	<div class="monitor">
 		<div class="header">
 			<div class="user">
-				<img class="avator" :src="user.user_avator">
-				<span class="name">{{user.user_name}}</span>
+				<img class="avator" :src="user.avator">
+				<span class="name">{{user.name}}</span>
 			</div>
 			<div class="dymanic">
 				<img class="icon" :src="icon">
