@@ -21,11 +21,11 @@
 				<div class="title">请选择请假日期</div>
 				<div class="item">
 					<span>开始时间</span>
-					<input class="start-time" type="data" readonly placeholder="选择开始日期">
+					<input class="start-time" type="text" id="starttime" name="starttime" readonly="readonly" placeholder="选择开始日期" data-date-format="yyyy-mm-dd">
 				</div>
 				<div class="item">
 					<span>结束时间</span>
-					<input class="end-time" type="data" readonly placeholder="选择结束日期">
+					<input class="end-time" type="text" id="endtime" name="endtime" readonly="readonly" placeholder="选择结束日期" data-date-format="yyyy-mm-dd">
 				</div>
 			</div>
 			<div class="comfirm">确定</div>
@@ -55,6 +55,11 @@
 </template>
 
 <script type="text/javascript">
+	import jquery from '../../common/js/jquery_3.1.1.js';
+	import {mobiscroll} from '../../common/js/mobiscroll.min.zh.js';
+	import '../../common/css/mobiscroll.min.css';
+
+
 	import noon from './ic_afternoon.png';
 	import night from './ic_night.png';
 	import check from './icon_yuan.png';
@@ -91,6 +96,40 @@
 		methods: {
 			selectType(type) {
 				this.type = type;
+			},
+			startTime(el){
+				let now = new Date(),
+					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+					console.log(1);
+				let instance1 = mobiscroll.datetime(el, {
+					lang: 'zh',
+					theme: 'ios',
+					display: 'bottom',
+					headerText: '选择开始时间',
+					min: now,
+					max: max,
+					minWidth: 50,
+					dateFormat: 'yy-mm-dd',
+					dateWheels: 'yy mm dd',
+					showLabel: true
+				});
+			},
+			endTime(el){
+				let now = new Date(),
+					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+					console.log(2);
+				let instance2 = mobiscroll.datetime(el, {
+					lang: 'zh',
+					theme: 'ios',
+					display: 'bottom',
+					headerText: '选择结束时间',
+					min: now,
+					max: max,
+					minWidth: 50,
+					dateFormat: 'yy-mm-dd',
+					dateWheels: 'yy mm dd',
+					showLabel: true
+				});
 			}
 		},
 		computed: {
@@ -109,6 +148,10 @@
 					this.selected = selected;
 				}
 			}
+		},
+		mounted(){
+			this.startTime('#starttime');
+			this.endTime('#endtime');
 		}
 	}
 </script>
