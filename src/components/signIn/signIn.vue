@@ -78,7 +78,8 @@ export default {
 			icon: icon,
 			sign_icon: sign_icon,
 			data: {},
-			records: []
+			records: [],
+			id:-1
 		};
 	},
 	filters: {
@@ -100,7 +101,9 @@ export default {
 		}
 	},
 	created() {
-		this.$http.post(URL + '/weixin_api/get_signIn_info').then((response) => {
+		this.id = this.$route.query.id;
+		console.log(this.id);
+		this.$http.post(URL + '/weixin_api/get_signIn_info?id='+this.id).then((response) => {
 			response = response.body;
 			if (response.code == ERR_CODE) {
 				this.data = response.data;

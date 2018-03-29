@@ -39,7 +39,7 @@
 			<!-- 功能列表 -->
 			<ul class="student-record clearfix">
 				<li class="record-item" v-for="item in record">
-					<router-link :to="{name:item.url,query: {id: user.id}}">
+					<router-link :to="{path:item.url,query: {id: user.id}}">
 						<img :src="item.imgUrl" class="item-img" :alt="item.title">
 						<div class="item-text">
 							<p class="item-text-title" v-html="item.title"></p>
@@ -77,11 +77,11 @@ export default {
 				{ url: banner_b }
 			],
 			record: [
-				{ title: '签到记录', text: '实时掌握孩子位置', url: 'signIn', imgUrl: record_1 },
-				{ title: '请个小假', text: '了解孩子出勤情况', url: 'leave', imgUrl: record_2 },
-				{ title: '校园食谱', text: '关注孩子饮食健康', url: 'recipes', imgUrl: record_3 },
-				{ title: '校园监控', text: '了解孩子校区动态', url: 'monitor', imgUrl: record_5 },
-				{ title: '基因检测', text: '', url: 'geneTest', imgUrl: record_6 }
+				{ title: '签到记录', text: '实时掌握孩子位置', url: '/signIn', imgUrl: record_1 },
+				{ title: '请个小假', text: '了解孩子出勤情况', url: '/leave', imgUrl: record_2 },
+				{ title: '校园食谱', text: '关注孩子饮食健康', url: '/recipes', imgUrl: record_3 },
+				{ title: '校园监控', text: '了解孩子校区动态', url: '/monitor', imgUrl: record_5 },
+				{ title: '基因检测', text: '', url: '/geneTest', imgUrl: record_6 }
 			],
 			user: {}
 		}
