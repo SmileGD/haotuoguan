@@ -2,17 +2,18 @@
 	<div class="personal">
 		<ul class="info-wrapper">
 			<li class="info">
-				<img :src="user" class="icon">
+				<img :src="user_icon" class="icon">
 				<div class="text">
-					<input type="text" value="龙玲燕" class="input">
+					<input type="text" :value="user.name" class="input">
 				</div>
 			</li>
 			<li class="info">
-				<img :src="gender" class="icon">
+				<img :src="gender_icon" class="icon">
 				<div class="text">
 					<select>
-						<option value="男" class="option">男</option>
-						<option value="女" class="option">女</option>
+						<option :value="user.gender" class="option">{{user.gender}}</option>
+						<option value="男" class="option" v-if="user.gender == '女'">男</option>
+						<option value="女" class="option" v-else>女</option>
 					</select>
 				</div>
 			</li>
@@ -22,22 +23,38 @@
 </template>
 
 <script type="text/javascript">
-import user from './ic_name.png';
-import gender from './ic_gender.png';
+import user_icon from './ic_name.png';
+import gender_icon from './ic_gender.png';
+
+const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
+const ERR_CODE = 1;
 
 	export default {
 		data(){
 			return {
-				user: user,
-				gender: gender
+				user_icon: user_icon,
+				gender_icon: gender_icon,
+				user: {}
 			}
+		},
+
+		created() {
+			this.$http.post(URL + '/weixin_api/get_user_info').then((response) => {
+				response = response.body;
+				if (response.code == ERR_CODE) {
+					this.user = response.data;
+				}
+			})
 		}
 	}
 </script>
 
 <style scoped lang="less">
 	.personal {
-		width: 100%;
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
 	}
 
 	.info-wrapper {
@@ -92,6 +109,8 @@ import gender from './ic_gender.png';
 		-moz-appearance:none;
 		-webkit-appearance:none;
 
+		width: 100%;
+		box-sizing: border-box;
 		font-size: 0.9rem;
 		color: #333;
 	}

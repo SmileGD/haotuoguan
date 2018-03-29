@@ -1,10 +1,10 @@
 <template>
 	<div class="leave">
-	<!-- 	<div class="student-basic clearfix">
+<!-- 		<div class="student-basic clearfix">
 			<div class="student-info">
-				<img :src="$route.params.user.user_avator" class="student-avator">
+				<img :src="$route.params.user.avator" class="student-avator">
 				<div class="student-desc">
-					<h3 class="student-name">{{$route.params.user.user_name}}</h3>
+					<h3 class="student-name">{{$route.params.user.name}}</h3>
 					<div class="student-text">
 						<span class="mr-14">{{$route.params.user.school_addr}}</span>
 						<span> {{$route.params.user.grade}}</span>
@@ -12,6 +12,8 @@
 				</div>
 			</div>
 		</div> -->
+
+
 		<div class="tab">
 			<div class="tab-item" :class="{'tab-active': type == 0}" @click="selectType(0)">请假</div>
 			<div class="tab-item" :class="{'tab-active': type == 1}" @click="selectType(1)">取消请假</div>
@@ -90,7 +92,8 @@
 							type: 1,
 							date: '2018-03-24'
 						}
-					]
+					],
+					user:{}
 			};
 		},
 		methods: {
@@ -100,7 +103,6 @@
 			startTime(el){
 				let now = new Date(),
 					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-					console.log(1);
 				let instance1 = mobiscroll.datetime(el, {
 					lang: 'zh',
 					theme: 'ios',
@@ -117,7 +119,6 @@
 			endTime(el){
 				let now = new Date(),
 					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-					console.log(2);
 				let instance2 = mobiscroll.datetime(el, {
 					lang: 'zh',
 					theme: 'ios',
@@ -157,6 +158,13 @@
 </script>
 
 <style scoped lang="less">
+	.leave {
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
+	}
+
 	.student-basic {
 		box-sizing: border-box;
 		width: 100%;
@@ -239,6 +247,7 @@
 			width: 100%;
 			height: 2.5rem;
 			padding:0 1.1rem 0 1.9rem;
+			box-sizing: border-box;
 			line-height: 2.5rem;
 			font-size: .75rem;
 			color: #333;
@@ -248,7 +257,8 @@
 		.start-time,
 		.end-time {
 			float: right;
-			margin-top: .9rem;
+			margin-top: .8rem;
+			text-align: right;
 
 			&::placeholder {
 				font-size: .75rem;

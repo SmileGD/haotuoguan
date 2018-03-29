@@ -26,6 +26,13 @@
 </script>
 
 <style scoped lang="less">
+	.modify-pwd {
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
+	}
+
 	.info-wrapper {
 		width: 100%;
 		padding: 1rem 0.65rem 0.65rem 0.65rem;

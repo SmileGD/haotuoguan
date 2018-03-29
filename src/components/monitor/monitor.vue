@@ -57,6 +57,13 @@
 </script>
 
 <style scoped lang="less">
+	.monitor {
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
+	}
+
 	.header {
 		position: relative;
 		width: 100%;

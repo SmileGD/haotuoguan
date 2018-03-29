@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper">
+	<div class="wrapper" ref="BScrollWrapper">
 		<ul class="wrapper-list">
 			<li class="wrapper-item" v-for="item in times">
 				<div class="top">
@@ -39,6 +39,8 @@
 </template>
 
 <script>
+	import BScroll from 'better-scroll';
+
 	import top_img from "./ic_decoration.png";
 	import com_img from "./ic_comments.png";
 	import {formatDate} from '../../common/js/date.js';
@@ -61,7 +63,12 @@
 		},
 
 		methods: {
-
+			// 初始化滚动
+			_initScroll(){
+				this.BScroll = new BScroll(this.$refs.BScrollWrapper,{
+					click:true
+				});
+			}
 		},
 
 		filters:{
@@ -76,6 +83,10 @@
 				response = response.body;
 				if(response.code == ERR_CODE) {
 					this.times = response.data.times;
+
+					this.$nextTick(() => {
+						this._initScroll();
+					});
 				}
 			})
 		}
@@ -85,13 +96,14 @@
 <style scoped lang="less">
 	.wrapper {
 		width: 100%;
+		height: 27rem;
+		margin-bottom: 2.5rem;
 		overflow: hidden;
 	}
 
 	.wrapper-list {
 		box-sizing: border-box;
 		width: 100%;
-		padding-bottom: 2.5rem;
 		background: #fff;
 
 		.top {
