@@ -100,7 +100,6 @@
 			startTime(el){
 				let now = new Date(),
 					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-					console.log(1);
 				let instance1 = mobiscroll.datetime(el, {
 					lang: 'zh',
 					theme: 'ios',
@@ -117,7 +116,6 @@
 			endTime(el){
 				let now = new Date(),
 					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
-					console.log(2);
 				let instance2 = mobiscroll.datetime(el, {
 					lang: 'zh',
 					theme: 'ios',
@@ -221,6 +219,7 @@
 	}
 
 	.time-select {
+		width: 17.4rem;
 		margin: .65rem;
 		overflow: hidden;
 		background: #fff;
@@ -239,6 +238,7 @@
 			width: 100%;
 			height: 2.5rem;
 			padding:0 1.1rem 0 1.9rem;
+			box-sizing: border-box;
 			line-height: 2.5rem;
 			font-size: .75rem;
 			color: #333;
