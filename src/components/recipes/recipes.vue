@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper recipes">
+	<div class="wrapper recipes" ref="BScrollWrapper">
 		<ul class="wrapper-list">
 			<li class="wrapper-item" v-for="item in times">
 				<div class="user">
@@ -28,6 +28,8 @@
 </template>
 
 <script>
+	import BScroll from 'better-scroll';
+
 	import praise_img from './ic_praise.png';
 	import {formatDate} from '../../common/js/date.js';
 
@@ -45,7 +47,12 @@
 		},
 
 		methods: {
-
+			// 初始化滚动
+			_initScroll(){
+				this.indexScroll = new BScroll(this.$refs.BScrollWrapper,{
+					click:true
+				});
+			}
 		},
 
 		filters:{
@@ -61,6 +68,10 @@
 				if(response.code == ERR_CODE) {
 					this.user = response.data.user;
 					this.times = response.data.times;
+
+					this.$nextTick(() => {
+						this._initScroll();
+					});
 				}
 			})
 		}
@@ -70,14 +81,15 @@
 <style scoped lang="less">
 	.wrapper {
 		width: 100%;
+		height: 100%;
 		overflow: hidden;
 	}
 
 	.recipes {
-		position: absolute;
-		left: 0;
-		right: 0;
-		z-index: 999;
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #fff;
 	}
 
 	.wrapper-list {

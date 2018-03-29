@@ -30,8 +30,6 @@
 				response = response.body;
 				if(response.code == ERR_CODE) {
 					this.teachers = response.data.teachers;
-					console.log(this.teachers);
-					console.log(this.teachers.length);
 				}
 			})
 		}
@@ -39,6 +37,13 @@
 </script>
 
 <style scoped lang="less">
+	.teacher-intro {
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
+	}
+
 	.teachers {
 		width: 100%;
 		overflow: hidden;

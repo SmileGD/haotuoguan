@@ -1,10 +1,10 @@
 <template>
 	<div class="leave">
-	<!-- 	<div class="student-basic clearfix">
+<!-- 		<div class="student-basic clearfix">
 			<div class="student-info">
-				<img :src="$route.params.user.user_avator" class="student-avator">
+				<img :src="$route.params.user.avator" class="student-avator">
 				<div class="student-desc">
-					<h3 class="student-name">{{$route.params.user.user_name}}</h3>
+					<h3 class="student-name">{{$route.params.user.name}}</h3>
 					<div class="student-text">
 						<span class="mr-14">{{$route.params.user.school_addr}}</span>
 						<span> {{$route.params.user.grade}}</span>
@@ -12,6 +12,8 @@
 				</div>
 			</div>
 		</div> -->
+
+
 		<div class="tab">
 			<div class="tab-item" :class="{'tab-active': type == 0}" @click="selectType(0)">请假</div>
 			<div class="tab-item" :class="{'tab-active': type == 1}" @click="selectType(1)">取消请假</div>
@@ -90,7 +92,8 @@
 							type: 1,
 							date: '2018-03-24'
 						}
-					]
+					],
+					user:{}
 			};
 		},
 		methods: {
@@ -155,6 +158,13 @@
 </script>
 
 <style scoped lang="less">
+	.leave {
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
+	}
+
 	.student-basic {
 		box-sizing: border-box;
 		width: 100%;
@@ -248,7 +258,8 @@
 		.start-time,
 		.end-time {
 			float: right;
-			margin-top: .9rem;
+			margin-top: .8rem;
+			text-align: right;
 
 			&::placeholder {
 				font-size: .75rem;

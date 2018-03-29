@@ -30,16 +30,14 @@
 		</div>
 		<ul class="opt-list">
 			<li class="opt-item" v-for="opt in options">
-				<router-link :to="opt.url" class="link">
+				<router-link :to="{name:opt.url,query: {id:user.id}}" class="link">
 					<img :src="opt.imgUrl" class="opt-img">
 					<span class="opt-text">{{opt.text}}</span>
 				</router-link>
 			</li>
 			<li class="opt-item" @click="showExit">
-				<div class="link">
-					<img :src="opt_4" class="opt-img">
-					<span class="opt-text">退出</span>
-				</div>
+				<img :src="opt_4" class="opt-img">
+				<span class="opt-text">退出</span>
 			</li>
 		</ul>
 		<transition name="fade">
@@ -70,9 +68,9 @@ export default {
 			opt_4: opt_4,
 			user: {},
 			options: [
-				{ url: "/personal", imgUrl: opt_1, text: "修改个人信息" },
-				{ url: "/modifyPwd", imgUrl: opt_2, text: "修改密码" },
-				{ url: "/change", imgUrl: opt_3, text: "切换孩子/机构" }
+				{ url: "personal", imgUrl: opt_1, text: "修改个人信息" },
+				{ url: "modifyPwd", imgUrl: opt_2, text: "修改密码" },
+				{ url: "change", imgUrl: opt_3, text: "切换孩子/机构" }
 			],
 			show: false
 		}

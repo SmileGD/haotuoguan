@@ -70,12 +70,23 @@
 </script>
 
 <style scoped lang="less">
+	.change {
+		z-index: 99;
+		position: relative;
+		min-height: 100%;
+		background: #f0f0f0;
+	}
+
 	.change-wrapper {
-		padding: 0 0.65rem;
+		padding: 0 0.65rem .9rem;
 
 		.change-item {
 			margin-bottom: 0.9rem;
 			background: #fff;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 
 			.title {
 				position: relative;
