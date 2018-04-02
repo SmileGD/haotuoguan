@@ -2,26 +2,26 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import vueResource from 'vue-resource';
 
-import index from '../components/index/index';
-import growth from '../components/growth/growth';
-import campus from '../components/campus/campus';
-import mine from '../components/mine/mine';
-import signIn from '../components/signIn/signIn';
+import index from 'components/index/index';
+import growth from 'components/growth/growth';
+import campus from 'components/campus/campus';
+import mine from 'components/mine/mine';
+import signIn from 'components/signIn/signIn';
 
-import leave from '../components/leave/leave';
-import recipes from '../components/recipes/recipes';
-import monitor from '../components/monitor/monitor';
-import geneTest from '../components/geneTest/geneTest';
-import teacherIntro from "../components/teacherIntro/teacherIntro";
+import leave from 'components/leave/leave';
+import recipes from 'components/recipes/recipes';
+import monitor from 'components/monitor/monitor';
+import geneTest from 'components/geneTest/geneTest';
+import teacherIntro from "components/teacherIntro/teacherIntro";
 
-import personal from '../components/personal/personal';
-import modifyPwd from '../components/modifyPwd/modifyPwd';
-import change from '../components/change/change';
-import licence from '../components/licence/licence';
-import login from '../components/login/login';
+import personal from 'components/personal/personal';
+import modifyPwd from 'components/modifyPwd/modifyPwd';
+import change from 'components/change/change';
+import licence from 'components/licence/licence';
+import login from 'components/login/login';
 
-import forgetPwd from '../components/forgetPwd/forgetPwd';
-import retrieve from '../components/retrieve/retrieve';
+import forgetPwd from 'components/forgetPwd/forgetPwd';
+import retrieve from 'components/retrieve/retrieve';
 
 Vue.use(Router)
 Vue.use(vueResource)

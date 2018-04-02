@@ -7,7 +7,7 @@
 				<img src="./delete.png" class="delete" v-show="tel" @click="empty">
 			</div>
 			<input type="text" class="code" placeholder="请输入校验码">
-			<div class="send-code" @click="sendCode" ref="sendCode">{{html}}</div>
+			<div class="send-code" :class="{disabled:!canSend}" @click="sendCode" ref="sendCode">{{html}}</div>
 		</div>
 		<div class="button" @click="next" disabled>下一步</div>
 	</div>
@@ -32,10 +32,12 @@
 				if(this.canSend) {
 					this.canSend = false;
 					let i = 59;
+					// 为了点击之后没有一秒的延迟 需先在定时器外边改变html的值
+					this.html = "重新发送("+(i < 10 ? '0'+i: i) +"S)";
 					let countDown = setInterval(() => {
-						this.html = "重新发送("+i+"S)";
 						i--;
-						if(i < 0) {
+						this.html = "重新发送("+(i < 10 ? '0'+i: i) +"S)";
+						if(i == 0) {
 							this.html = "发送验证码";
 							clearInterval(countDown);
 							this.canSend = true;
@@ -112,6 +114,10 @@
 			color: #fff;
 			background: #ffcd31;
 			border-radius: 0.4rem;
+		}
+
+		.disabled {
+			background: #adadad;
 		}
 	}
 
