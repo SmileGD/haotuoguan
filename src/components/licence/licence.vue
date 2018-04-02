@@ -1,10 +1,10 @@
 <template>
 	<transition name='slide' mode='out-in'>
-		<div class="licence slide-to-left" v-show="showLicence">
-			<h3 class="header">
-			<span class="back" @click="back">返回</span>
-			机构许可证
-		</h3>
+		<div class="licence slide-to-left">
+<!-- 			<h3 class="header">
+				<span class="back" @click="back">返回</span>
+				机构许可证
+			</h3> -->
 			<ul class="licence-list clearfix">
 				<li class="licence-item" v-for="img in licences">
 					<img :src="img" class="lice-img">
@@ -14,27 +14,32 @@
 	</transition>
 </template>
 <script type="text/javascript">
+	const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
+	const ERR_CODE = 1;
 
 export default {
-	props: {
-		licences: {
-			type: Array
-		}
-	},
 
 	data() {
 		return {
-			showLicence: false
+			campus_id: -1,
+			licences: []
 		}
 	},
 
 	methods: {
-		show() {
-			this.showLicence = true;
-		},
 		back() {
-			this.showLicence = false;
+			this.$router.push({name: 'campus'});
 		}
+	},
+
+	created() {
+		this.campus_id = this.$route.query.campus_id;
+		this.$http.post(URL + '/weixin_api/get_campus_info?id='+this.campus_id).then((response) => {
+			response = response.body;
+			if (response.code == ERR_CODE) {
+				this.licences = response.data.licence_imgs;
+			}
+		})
 	}
 }
 

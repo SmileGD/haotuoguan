@@ -45,7 +45,7 @@
 				<div class="exit">
 					<div class="content">
 						<div class="option header">是否退出当前账号</div>
-						<div class="option">是</div>
+						<div class="option" @click="gotoLogin">是</div>
 						<div class="option" @click="hideExit">否</div>
 					</div>
 				</div>
@@ -82,6 +82,12 @@ export default {
 		},
 		hideExit() {
 			this.show = false;
+		},
+		gotoLogin() {
+			this.$router.push({
+				name:"login"
+			});
+			this.hideExit();
 		}
 	},
 

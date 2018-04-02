@@ -1,15 +1,15 @@
 <template>
 	<div class="sign-in" ref="BScrollWrapper">
 		<div>
-<!-- 			<div class="student-basic clearfix">
-				<h1 class="basic-header">{{$route.params.user.campus}}-{{$route.params.user.org_name}}</h1>
+			<div class="student-basic clearfix">
+				<h1 class="basic-header">{{data.campus}}-{{data.org_name}}</h1>
 				<div class="student-info">
-					<img :src="$route.params.user.user_avator" class="student-avator">
+					<img :src="data.child_avator" class="student-avator">
 					<div class="student-desc">
-						<h3 class="student-name">{{$route.params.user.user_name}}</h3>
+						<h3 class="student-name">{{data.name}}</h3>
 						<div class="student-text">
-							<span class="mr-14">{{$route.params.user.school_addr}}</span>
-							<span> {{$route.params.user.grade}}</span>
+							<span class="mr-14">{{data.school_addr}}</span>
+							<span> {{data.grade}}</span>
 						</div>
 					</div>
 				</div>
@@ -27,7 +27,7 @@
 						<span>{{data.leave_count}}</span>
 					</div>
 				</div>
-			</div> -->
+			</div>
 			<div class="timetag">
 				<img :src="icon" class="icon">
 				<span class="text">考勤记录</span>
@@ -130,8 +130,8 @@ export default {
 
 .student-basic {
 	box-sizing: border-box;
-	width: 17.4rem;
-	margin: .55rem .6rem;
+	width: 100%;
+	margin-bottom: .55rem;
 	background: #fff;
 
 	.basic-header {
@@ -182,20 +182,18 @@ export default {
 
 .integral {
 	position: relative;
-	display: block;
+	display: flex;
 	height: 2.5rem;
-	padding: 0 1.3rem 0 .65rem;
 	line-height: 2.5rem;
-	font-size: 0;
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 
 	.integral-item {
-		display: inline-block;
+		flex: 1;
 		font-size: .75rem;
 		color: #333;
-		margin-right: .5rem;
+		text-align: center;
 	}
 }
 

@@ -1,24 +1,24 @@
 <template>
 	<div class="leave">
-<!-- 		<div class="student-basic clearfix">
+		<div class="student-basic clearfix">
 			<div class="student-info">
-				<img :src="$route.params.user.avator" class="student-avator">
+				<img :src="data.child_avator" class="student-avator">
 				<div class="student-desc">
-					<h3 class="student-name">{{$route.params.user.name}}</h3>
+					<h3 class="student-name">{{data.child_name}}</h3>
 					<div class="student-text">
-						<span class="mr-14">{{$route.params.user.school_addr}}</span>
-						<span> {{$route.params.user.grade}}</span>
+						<span class="mr-14">{{data.school_addr}}</span>
+						<span> {{data.grade}}</span>
 					</div>
 				</div>
 			</div>
-		</div> -->
+		</div>
 
 
 		<div class="tab">
-			<div class="tab-item" :class="{'tab-active': type == 0}" @click="selectType(0)">请假</div>
-			<div class="tab-item" :class="{'tab-active': type == 1}" @click="selectType(1)">取消请假</div>
+			<div class="tab-item" :class="{'tab-active': type === 0}" @click="selectType(0)">请假</div>
+			<div class="tab-item" :class="{'tab-active': type === 1}" @click="selectType(1)">取消请假</div>
 		</div>
-		<div v-show="type == 0">
+		<div v-show="type === 0">
 			<div class="time-select">
 				<div class="title">请选择请假日期</div>
 				<div class="item">
@@ -33,25 +33,30 @@
 			<div class="comfirm">确定</div>
 		</div>
 
-		<div v-show="type == 1">
-			<ul class="leave-lsit">
-				<li class="leave-item" v-for="(item, $index) in leaves">
-					<label :for="item.id" class = "label-wrapper">
-						<input type="checkbox" class="checkbox" :id="item.id" :value="item" v-model="selected">
-						<label :for="item.id" class='checkbox-icon'>
-							<img :src="check" class="check">
+		<div v-show="type === 1">
+
+			<div class="list-Wrapper" ref="BScrollWrapper">
+				<ul class="leave-lsit">
+					<li class="leave-item" v-for="(item, $index) in leaves" :key="$index">
+						<label :for="$index" class = "label-wrapper">
+							<input type="checkbox" class="checkbox" :id="$index" :value="item" v-model="selected">
+							<label :for="$index" class='checkbox-icon'>
+								<img :src="check" class="check">
+							</label>
+							<div class="date">日期: {{item.time | formatDate}}</div>
+							<img :src="item.type == 1 ? noon : night" class="type-img">
 						</label>
-						<div class="date">日期: {{item.date}}</div>
-						<img :src="item.type == 1 ? noon : night" class="type-img">
-					</label>
-				</li>
-			</ul>
+					</li>
+				</ul>
+			</div>
 
 			<div class="tab tab-fixed">
 				<input id="all" type="checkbox" v-model="selectAll" style="display:none">
-				<label for="all" class="tab-item border-right">全部选择</label>
+				<label for="all" class="tab-item border-right" v-if="selected.length !=0 && selected.length == leaves.length">取消全选</label>
+				<label for="all" class="tab-item border-right" v-else>全部选择</label>
 				<div class="tab-item">确定</div>
 			</div>
+
 		</div>
 	</div>
 </template>
@@ -60,7 +65,11 @@
 	import jquery from '../../common/js/jquery_3.1.1.js';
 	import {mobiscroll} from '../../common/js/mobiscroll.min.zh.js';
 	import '../../common/css/mobiscroll.min.css';
+	import { formatDate } from '../../common/js/date.js';
+	import BScroll from 'better-scroll';
 
+const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
+const ERR_CODE = 1;
 
 	import noon from './ic_afternoon.png';
 	import night from './ic_night.png';
@@ -76,33 +85,30 @@
 					checkall: false,
 					checked: true,
 					selected: [],
-					leaves: [
-						{
-							id: 1,
-							type: 1,
-							date: '2018-03-24'
-						},
-						{
-							id: 2,
-							type: 3,
-							date: '2018-03-24'
-						},
-						{
-							id: 3,
-							type: 1,
-							date: '2018-03-24'
-						}
-					],
-					user:{}
+					data:{},
+					leaves: []
 			};
 		},
+
 		methods: {
+			// 初始化滚动
+			_initScroll(){
+				if(!this.scroll){
+					this.scroll = new BScroll(this.$refs.BScrollWrapper,{
+						click:true
+					});
+				} else {
+					this.scroll.refresh();
+				}
+			},
+
 			selectType(type) {
 				this.type = type;
 			},
+
 			startTime(el){
-				let now = new Date(),
-					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
+				let now = new Date();
+				let max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
 				let instance1 = mobiscroll.datetime(el, {
 					lang: 'zh',
 					theme: 'ios',
@@ -116,6 +122,7 @@
 					showLabel: true
 				});
 			},
+
 			endTime(el){
 				let now = new Date(),
 					max = new Date(now.getFullYear() + 3, now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds());
@@ -133,6 +140,7 @@
 				});
 			}
 		},
+
 		computed: {
 			selectAll: {
 				get: function () {
@@ -148,12 +156,46 @@
 					}
 					this.selected = selected;
 				}
+			},
+
+			cancelALL() {
+				if( this.selected.length == this.leaves.length ) {
+					console.log(this.selected.length);
+				}
 			}
 		},
+
+		watch: {
+			type: function(val, oldval) {
+				if(val === 1) {
+					this.$nextTick(() => {
+						this._initScroll();
+					});
+				}
+			}
+		},
+
+		filters: {
+			formatDate(time) {
+				let date = new Date(time);
+				return formatDate(date, 'YYYY-MM-DD');
+			}
+		},
+
 		mounted(){
 			this.startTime('#starttime');
 			this.endTime('#endtime');
-		}
+		},
+
+		created() {
+			this.$http.post(URL + '/weixin_api/get_signIn_info?id='+this.id).then((response) => {
+				response = response.body;
+				if (response.code == ERR_CODE) {
+					this.data = response.data;
+					this.leaves = this.data.leaves;
+				}
+			})
+		},
 	}
 </script>
 
@@ -279,7 +321,15 @@
 		background: #76ccf6;
 	}
 
+	.list-Wrapper {
+		position: relative;
+		height: 20.8rem;
+		// margin-top: 0.65rem;
+		overflow: hidden;
+	}
+
 	.leave-lsit {
+		// padding: 0 0.65rem 0.65rem 0.65rem;
 		padding: 0.65rem;
 
 		.leave-item {

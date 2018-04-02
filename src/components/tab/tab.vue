@@ -27,7 +27,7 @@ export default {
 <style scoped lang="less">
 	.tab {
 		z-index: 9;
-		position: fixed;
+		position: absolute;
 		display: flex;
 		left: 0;
 		bottom: 0;

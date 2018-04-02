@@ -61,23 +61,17 @@
 				</div>
 			</div>
 		</div>
-		<licence :licences="lic_imgs" ref="licence"></licence>
 	</div>
 </template>
 <script>
 import BScroll from 'better-scroll';
 import Swiper from 'swiper/dist/js/swiper.min.js';
 import 'swiper/dist/css/swiper.min.css';
-import licence from '../licence/licence';
 
 const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
 const ERR_CODE = 1;
 
 export default {
-	components: {
-		licence
-	},
-
 	data() {
 		return {
 			campus: {},
@@ -118,7 +112,11 @@ export default {
 			}
 		},
 		showLicence() {
-			this.$refs.licence.show();
+			this.$router.push(
+			{
+				name: 'licence', 
+				query: {campus_id: 12}
+			});
 		}
 	},
 

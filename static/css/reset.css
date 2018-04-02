@@ -44,6 +44,7 @@ q:before, q:after {
 
 input {
     outline: none;
+    background: transparent;
 }
 
 table {

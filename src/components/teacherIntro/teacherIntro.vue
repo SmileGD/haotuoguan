@@ -85,6 +85,7 @@
 
 				.name {
 					margin-bottom: 0.45rem;
+					line-height: .8rem;
 					font-size: 0.75rem;
 					font-weight: 700;
 					color: #333;
