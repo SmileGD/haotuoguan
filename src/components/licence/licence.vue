@@ -10,14 +10,21 @@
 					<img :src="img" class="lice-img">
 				</li>
 			</ul>
+			<div class="loading-container" v-show="!licences.length">
+				<loading></loading>
+			</div>
 		</div>
 	</transition>
 </template>
 <script type="text/javascript">
+	import loading from 'components/loading/loading';
 	const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
 	const ERR_CODE = 1;
 
 export default {
+	components: {
+		loading
+	},
 
 	data() {
 		return {
@@ -68,6 +75,12 @@ export default {
 		}
 	}
 
+	.loading-container {
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+	}
 
 .header {
 	position: relative;

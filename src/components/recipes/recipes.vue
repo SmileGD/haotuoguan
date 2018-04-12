@@ -1,7 +1,7 @@
 <template>
 	<div class="wrapper recipes" ref="BScrollWrapper">
 		<ul class="wrapper-list">
-			<li class="wrapper-item" v-for="item in times">
+			<li class="wrapper-item" v-for="item in recipes">
 				<div class="user">
 					<div class="user-avator">
 						<img :src="item.user.avator">
@@ -41,7 +41,7 @@
 			return {
 				praise_img: praise_img,
 				user: {},
-				times: [],
+				recipes: [],
 				show: false,
 			};
 		},
@@ -63,11 +63,11 @@
 		},
 
 		created(){
-			this.$http.post(URL+'/weixin_api/get_growth_info').then((response) => {
+			this.$http.post(URL+'/weixin_api/get_recipes_info').then((response) => {
 				response = response.body;
 				if(response.code == ERR_CODE) {
 					this.user = response.data.user;
-					this.times = response.data.times;
+					this.recipes = response.data.recipes;
 
 					this.$nextTick(() => {
 						this._initScroll();

@@ -2,7 +2,7 @@
 	<transition name='slide' mode='out-in'>
 		<div class="change slide-to-left" ref="BScrollWrapper">
 			<ul class="change-wrapper">
-				<li class="change-item" v-for="(item,index) in children" :key="index">
+				<li class="change-item" v-for="(item,index) in children" :key="index"  @click="select(index)">
 					<input type="checkbox" :value="item.child_id" v-model="selected" style="display: none">
 					<div class="title">
 						<h3 class="title-text">{{item.campus}}-{{item.org_name}}</h3>
@@ -11,7 +11,7 @@
 					<div class="user">
 						<img :src="item.child_avator" class="avator">
 						<span class="name">{{item.child_name}}</span>
-						<img :src="icon_1" class="icon" @click="select(index)">
+						<img :src="icon_1" class="icon">
 					</div>
 				</li>
 			</ul>

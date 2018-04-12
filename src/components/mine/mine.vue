@@ -1,5 +1,5 @@
 <template>
-	<div id="app">
+	<div>
 		<div class="student-basic clearfix">
 			<h1 class="basic-header">{{user.campus}}-{{user.org_name}}</h1>
 			<div class="student-info">
@@ -69,7 +69,7 @@ export default {
 			user: {},
 			options: [
 				{ url: "personal", imgUrl: opt_1, text: "修改个人信息" },
-				{ url: "modifyPwd", imgUrl: opt_2, text: "修改密码" },
+				{ url: "modify_pwd", imgUrl: opt_2, text: "修改密码" },
 				{ url: "change", imgUrl: opt_3, text: "切换孩子/机构" }
 			],
 			show: false

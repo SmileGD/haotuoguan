@@ -54,7 +54,7 @@
 				<input id="all" type="checkbox" v-model="selectAll" style="display:none">
 				<label for="all" class="tab-item border-right" v-if="selected.length !=0 && selected.length == leaves.length">取消全选</label>
 				<label for="all" class="tab-item border-right" v-else>全部选择</label>
-				<div class="tab-item">确定</div>
+				<div class="tab-item" @click="confirm">确定</div>
 			</div>
 
 		</div>
@@ -138,6 +138,18 @@ const ERR_CODE = 1;
 					dateWheels: 'yy mm dd',
 					showLabel: true
 				});
+			},
+
+			confirm() {
+				this.selected.forEach((item1) => {
+					this.leaves.forEach((item2,index) => {
+						if(item2 === item1) {
+							this.leaves.splice(index,1);
+						}
+					})
+				})
+
+				this.selected = [];
 			}
 		},
 
@@ -155,12 +167,6 @@ const ERR_CODE = 1;
 							});
 					}
 					this.selected = selected;
-				}
-			},
-
-			cancelALL() {
-				if( this.selected.length == this.leaves.length ) {
-					console.log(this.selected.length);
 				}
 			}
 		},

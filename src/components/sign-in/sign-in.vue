@@ -60,10 +60,14 @@
 				</li>
 			</ul>
 		</div>
+		<div class="loading-container" v-show="!records.length">
+			<loading></loading>
+		</div>
 	</div>
 </template>
 <script type="text/javascript">
 import BScroll from 'better-scroll';
+import loading from 'components/loading/loading';
 
 import icon from './icon_attendance.png';
 import sign_icon from './icon_Head-portrait.png';
@@ -73,6 +77,10 @@ const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
 const ERR_CODE = 1;
 
 export default {
+	components: {
+		loading
+	},
+
 	data() {
 		return {
 			icon: icon,
@@ -143,6 +151,13 @@ export default {
 		text-align: center;
 		border-bottom: 2px solid #f0f0f0;
 	}
+}
+
+.loading-container {
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
 }
 
 .student-info {

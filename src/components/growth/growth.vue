@@ -19,7 +19,7 @@
 				<div class="text">{{item.text}}</div>
 				<ul :class="[{'pic-list': item.photos.length > 2},{'pic-list-2': item.photos.length == 2},{'pic-list-1': item.photos.length == 1}]">
 					<li class="pic-item" v-for="pic in item.photos">
-						<img :src="pic" class="pic">
+						<img v-lazy="pic" class="pic">
 					</li>
 				</ul>
 				<a href="javascript:;" class="show-com">
@@ -99,6 +99,7 @@
 		height: 27rem;
 		margin-bottom: 2.5rem;
 		overflow: hidden;
+		background: #fff;
 	}
 
 	.wrapper-list {

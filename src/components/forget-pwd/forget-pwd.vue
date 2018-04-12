@@ -4,12 +4,15 @@
 			<div class="tel-wrapper">
 				<span class="text">请输入手机号码：</span>
 				<input type="text" class="tel" v-model="tel" ref="tel">
-				<img src="./delete.png" class="delete" v-show="tel" @click="empty">
+				<img src="./delete.png" class="delete" v-show="tel" @click="emptyTel">
 			</div>
-			<input type="text" class="code" placeholder="请输入校验码">
-			<div class="send-code" :class="{disabled:!canSend}" @click="sendCode" ref="sendCode">{{html}}</div>
+			<div class="code-wrapper">
+				<input type="text" class="code" v-model="code" placeholder="请输入校验码" ref="code">
+				<img src="./delete.png" class="delete-code" v-show="code" @click="emptyCode">
+				<div class="send-code" :class="{disabled:!canSend}" @click="sendCode" ref="sendCode">{{html}}</div>
+			</div>
 		</div>
-		<div class="button" @click="next" disabled>下一步</div>
+		<div class="button" @click="next">下一步</div>
 	</div>
 </template>
 
@@ -17,16 +20,22 @@
 	export default {
 		data() {
 			return {
-				tel:'',
+				tel: '',
+				code: '',
+				loginData: {},
 				html: "发送校验码",
 				canSend: true
 			}
 		},
 
 		methods: {
-			empty() {
+			emptyTel() {
 				this.tel = "";
 				this.$refs.tel.focus();
+			},
+			emptyCode() {
+				this.code = "";
+				this.$refs.code.focus();
 			},
 			sendCode(){
 				if(this.canSend) {
@@ -49,6 +58,15 @@
 				this.$router.push({
 					name: 'retrieve'
 				})
+			},
+			login() {
+				if(!this.tel || !this.code) {
+					alert('请输入手机号码和登录码');
+					return;
+				}
+				this.loginData.tel = this.tel;
+				this.loginData.code = this.code;
+				console.log(this.loginData);
 			}
 		}
 	}
@@ -93,14 +111,31 @@
 			border-radius: 50%;
 		}
 
+		.code-wrapper {
+			position: relative;
+		}
+
 		.code {
-			width: 9rem;
+			width: 7rem;
 			margin-top: 1.5rem;
-			padding: 0.3rem 0;
+			padding: 0.3rem 2rem 0.3rem 0;
 			font-size: 0.75rem;
 			color: #adadad;
 			border-bottom: 1px solid #adadad;
 			border-radius: 0;
+
+			&::placeholder {
+				color: #adadad;
+			}
+		}
+
+		.delete-code {
+			position: absolute;
+			left: 7.5rem;
+			bottom: 0.8rem;
+			width: 0.8rem;
+			height: 0.8rem;
+			border-radius: 50%;
 		}
 
 		.send-code {

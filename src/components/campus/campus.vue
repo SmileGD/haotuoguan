@@ -1,5 +1,5 @@
 <template>
-	<div class="campus" ref="BScrollWrapper">
+	<scroll class="campus" ref="scroll">
 		<div>
 			<!-- 轮播图 -->
 			<div class="swiper-container org-home-swiper">
@@ -10,6 +10,7 @@
 				</div>
 				<div class="swiper-pagination"></div>
 			</div>
+
 			<!--校区-->
 			<div class="school-wrapper">
 				<!-- 校区介绍 -->
@@ -28,7 +29,7 @@
 				<div class="teachers clearfix">
 					<div class="text">
 						教学师资
-						<router-link class="more" to="/teacherIntro">更多</router-link>
+						<router-link class="more" to="/teacher_intro">更多</router-link>
 					</div>
 					<ul class="teacher-list">
 						<li class="teacher-item" v-for="teacher in teachers">
@@ -39,14 +40,14 @@
 				</div>
 				<!--机构环境-->
 				<div class="environment clearfix">
-					<div class="left">
+					<div class="left" @click="morePic">
 						<p class="text"><span class="count">{{env_imgs.length}}</span>张</p>
 						<p>{{campus.org_name}}</p>
 						<p>机构环境</p>
 					</div>
 					<ul class="pics clearfix">
-						<li class="pic-item" v-for="url in env_imgs">
-							<img :src="url" class="auto-width">
+						<li class="pic-item" v-for="item in env_imgs">
+							<img :src="item.src" class="pic-width">
 						</li>
 					</ul>
 				</div>
@@ -61,10 +62,10 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</scroll>
 </template>
 <script>
-import BScroll from 'better-scroll';
+import scroll from 'components/scroll/scroll';
 import Swiper from 'swiper/dist/js/swiper.min.js';
 import 'swiper/dist/css/swiper.min.css';
 
@@ -72,6 +73,10 @@ const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
 const ERR_CODE = 1;
 
 export default {
+	components: {
+		scroll
+	},
+
 	data() {
 		return {
 			campus: {},
@@ -83,12 +88,6 @@ export default {
 	},
 
 	methods: {
-		// 初始化滚动
-		_initScroll(){
-			this.indexScroll = new BScroll(this.$refs.BScrollWrapper,{
-				click:true
-			});
-		},
 		mySwiper() {
 			new Swiper('.swiper-container', {
 				loop: true,
@@ -117,6 +116,12 @@ export default {
 				name: 'licence', 
 				query: {campus_id: 12}
 			});
+		},
+		morePic() {
+			this.$router.push(
+			{
+				name: 'env_pic'
+			});
 		}
 	},
 
@@ -131,11 +136,15 @@ export default {
 				this.getFiveTeacher();
 
 				this.$nextTick(function() {
-					this._initScroll();
 					this.mySwiper();
-				})
-
+				});
 			}
+		})
+	},
+
+	mounted() {
+		setTimeout(() => {
+			this.$refs.scroll.refresh();
 		})
 	}
 }
@@ -146,6 +155,7 @@ export default {
 	width: 100%;
 	height: 27rem;
 	overflow: hidden;
+	background: #fff;
 }
 
 .org-home-swiper {
@@ -290,8 +300,8 @@ export default {
 		float: left;
 		width: 6.5rem;
 		height: 7rem;
-		line-height: 1.2rem;
-		padding: 2.2rem 0 0 1.3rem;
+		line-height: 1.5rem;
+		padding: 1.6rem 0 0 1.3rem;
 		font-size: .75rem;
 		color: #fff;
 		background: #6198d3;
@@ -317,12 +327,19 @@ export default {
 
 	.pic-item {
 		float: left;
-		height: 3.4rem;
-		margin: 0 .1rem .2rem;
+		width: 3.4rem;
+		height: 3.45rem;
+		margin: 0 .1rem .1rem 0;
+
+		&:nth-child(4n-3){
+			width: 5.15rem;
+			height: 3.45rem;
+		}
 	}
 
-	.auto-width {
-		height: 3.4rem;
+	.pic-width {
+		width: 100%;
+		height: 100%;
 	}
 }
 
