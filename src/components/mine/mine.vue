@@ -12,7 +12,7 @@
 					</div>
 				</div>
 			</div>
-			<router-link to="/" class="integral">
+			<div class="integral">
 				<div id="score01" class="integral-item">
 					积分 :
 					<span>{{user.integral}}</span>
@@ -26,7 +26,7 @@
 					<span>{{user.ranking}}</span>
 				</div>
 				<img src="./ic_more.png" alt="更多信息" class="integral-more">
-			</router-link>
+			</div>
 		</div>
 		<ul class="opt-list">
 			<li class="opt-item" v-for="opt in options">

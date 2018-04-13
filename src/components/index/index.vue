@@ -2,14 +2,13 @@
 	<div class="index" ref="BScrollWrapper">
 		<!-- BScroll容器 -->
 		<div>
-			<!-- 轮播图 -->
-			<div class="swiper-container">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide" v-for="banner in banners">
-						<img :src="banner.url" alt="">
+						<!-- 轮播图 -->
+			<div v-if="banners.length">
+				<slider class="index-swiper" ref="slider">
+					<div v-for="banner in banners">
+							<img :src="banner.url" class="banner">
 					</div>
-				</div>
-				<div class="swiper-pagination"></div>
+				</slider>
 			</div>
 			<!-- 用户信息 -->
 			<div class="student-basic clearfix">
@@ -19,7 +18,7 @@
 					<h3 class="student-name">{{user.name}}</h3>
 					<img src="./ic_particulars.png" alt="" class="student-detail">
 				</router-link>
-				<router-link to="/" class="integral">
+				<div class="integral">
 					<div id="score01" class="integral-item">
 						积分 :
 						<span>{{user.integral}}</span>
@@ -33,7 +32,7 @@
 						<span>{{user.ranking}}</span>
 					</div>
 					<img src="./ic_more.png" alt="更多信息" class="integral-more">
-				</router-link>
+				</div>
 			</div>
 
 			<!-- 功能列表 -->
@@ -54,8 +53,7 @@
 </template>
 <script>
 import BScroll from 'better-scroll';
-import Swiper from 'swiper/dist/js/swiper.min.js';
-import 'swiper/dist/css/swiper.min.css';
+import slider from 'components/slider/slider';
 
 import banner_a from './m-banner01.jpg';
 import banner_b from './m-banner02.jpg';
@@ -70,6 +68,10 @@ const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
 const ERR_CODE = 1;
 
 export default {
+	components: {
+		slider
+	},
+
 	data() {
 		return {
 			banners: [
@@ -97,24 +99,6 @@ export default {
 			}else {
 				this.scroll.refresh();
 			}
-		},
-
-		mySwiper() {
-			new Swiper('.swiper-container', {
-				loop: true,
-				speed: 400,
-				autoplay: {
-					delay: 3000,
-					disableOnInteraction: false
-				},
-				pagination: {
-					el: '.swiper-pagination',
-					clickable: true
-				},
-				onTouchEnd: function() {
-					swiper.startAutoplay();
-				}
-			});
 		}
 	},
 
@@ -132,9 +116,11 @@ export default {
 		})
 	},
 
-	mounted() {
+	activated() {
 		setTimeout(() => {
-			this.mySwiper();
+			if(this.$refs.slider) {
+				this.$refs.slider.next();
+			}
 			this._initScroll();
 		},20);
 	}
@@ -150,48 +136,57 @@ export default {
 	overflow: hidden;
 }
 
-.swiper-container {
-	width: 100%;
+.index-swiper {
 	height: 8.5rem;
 
-	.swiper-wrapper {
-		width: 100%;
-		height: 100%;
+	.banner {
+		height: 8.5rem;
 	}
 
-	.swiper-slide {
-		background-position: center;
-		background-size: cover;
-		width: 100%;
-		height: 100%;
-
-		img {
-			width: 100%;
-			height: 100%;
-		}
-	}
-
-	.swiper-pagination {
-		font-size: 0;
-	}
-
-	.swiper-pagination-bullet {
-		display: inline-block;
-		width: .4rem;
-		height: .4rem;
-		border: 1px solid #fff;
-		border-radius: 50%;
-	}
-
-	.swiper-pagination-bullet-active {
-		display: inline-block;
-		width: .4rem;
-		height: .4rem;
-		background: #fff;
-		border: 1px solid #fff;
-		border-radius: 50%;
-	}
 }
+
+// .swiper-container {
+// 	width: 100%;
+// 	height: 8.5rem;
+
+// 	.swiper-wrapper {
+// 		width: 100%;
+// 		height: 100%;
+// 	}
+
+// 	.swiper-slide {
+// 		background-position: center;
+// 		background-size: cover;
+// 		width: 100%;
+// 		height: 100%;
+
+// 		.banner {
+// 			width: 100%;
+// 			height: 100%;
+// 		}
+// 	}
+
+// 	.swiper-pagination {
+// 		font-size: 0;
+// 	}
+
+// 	.swiper-pagination-bullet {
+// 		display: inline-block;
+// 		width: .4rem;
+// 		height: .4rem;
+// 		border: 1px solid #fff;
+// 		border-radius: 50%;
+// 	}
+
+// 	.swiper-pagination-bullet-active {
+// 		display: inline-block;
+// 		width: .4rem;
+// 		height: .4rem;
+// 		background: #fff;
+// 		border: 1px solid #fff;
+// 		border-radius: 50%;
+// 	}
+// }
 
 .student-basic {
 	box-sizing: border-box;

@@ -2,13 +2,12 @@
 	<scroll class="campus" ref="scroll">
 		<div>
 			<!-- 轮播图 -->
-			<div class="swiper-container org-home-swiper">
-				<div class="swiper-wrapper">
-					<div class="swiper-slide" v-for="banner in banners">
-						<img :src="banner" alt="">
+			<div v-if="banners.length">
+				<slider class="campus-swiper" ref="slider">
+					<div v-for="banner in banners">
+							<img :src="banner" class="banner">
 					</div>
-				</div>
-				<div class="swiper-pagination"></div>
+				</slider>
 			</div>
 
 			<!--校区-->
@@ -29,7 +28,7 @@
 				<div class="teachers clearfix">
 					<div class="text">
 						教学师资
-						<router-link class="more" to="/teacher_intro">更多</router-link>
+						<span class="more" @click="allTeachers">更多</span>
 					</div>
 					<ul class="teacher-list">
 						<li class="teacher-item" v-for="teacher in teachers">
@@ -66,15 +65,16 @@
 </template>
 <script>
 import scroll from 'components/scroll/scroll';
-import Swiper from 'swiper/dist/js/swiper.min.js';
-import 'swiper/dist/css/swiper.min.css';
+import slider from 'components/slider/slider';
+
 
 const URL = 'http://rap2.api.haotuoguan.cn/app/mock/18/POST/';
 const ERR_CODE = 1;
 
 export default {
 	components: {
-		scroll
+		scroll,
+		slider
 	},
 
 	data() {
@@ -89,7 +89,7 @@ export default {
 
 	methods: {
 		mySwiper() {
-			new Swiper('.swiper-container', {
+			this.swiper = new Swiper('.swiper-container', {
 				loop: true,
 				speed: 400,
 				autoplay: {
@@ -105,10 +105,16 @@ export default {
 				}
 			})
 		},
+
 		getFiveTeacher() {
 			for (let i = 0; i < 5; i++) {
 				this.teachers.push(this.campus.teachers[i]);
 			}
+		},
+		allTeachers() {
+			this.$router.push({
+				name: 'teacher_intro'
+			})
 		},
 		showLicence() {
 			this.$router.push(
@@ -134,18 +140,17 @@ export default {
 				this.env_imgs = this.campus.env_imgs;
 				this.lic_imgs = this.campus.licence_imgs;
 				this.getFiveTeacher();
-
-				this.$nextTick(function() {
-					this.mySwiper();
-				});
 			}
 		})
 	},
 
-	mounted() {
+	activated() {
 		setTimeout(() => {
-			this.$refs.scroll.refresh();
-		})
+			if(this.$refs.scroll && this.$refs.slider) {
+				this.$refs.scroll.refresh();
+				this.$refs.slider.next();
+			}
+		},20);
 	}
 }
 
@@ -156,41 +161,40 @@ export default {
 	height: 27rem;
 	overflow: hidden;
 	background: #fff;
-}
 
-.org-home-swiper {
-	width: 100%;
-	height: 9.5rem;
+	.campus-swiper {
+		height: 9.5rem;
 
-	.swiper-wrapper {
-		width: 100%;
-		height: 100%;
-	}
-
-	img {
-		width: 100%;
-		height: 100%;
-	}
-
-	.swiper-pagination {
-		width: 100%;
-
-		.swiper-pagination-bullet {
-			width: .6rem;
-			height: .6rem;
-			background: url("./ic_square1.png");
-			background-size: .6rem .6rem;
+		.banner {
+				height: 9.5rem;
 		}
 
-		.swiper-pagination-bullet-active {
-			width: .6rem;
-			height: .6rem;
-			background: url("./ic_square.png");
-			background-size: .6rem .6rem;
+		.dots {
+			position: absolute;
+			right: 0;
+			left: 0;
+			bottom: 0.6rem;
+			text-align: center;
+			font-size: 0;
+
+			.dot {
+				display: inline-block;
+				margin: 0 0.2rem;
+				width: 0.6rem;
+				height: 0.6rem;
+				background: url("./ic_square1.png");
+				background-size: .6rem .6rem;
+			}
+
+			.active {
+				width: .6rem;
+				height: .6rem;
+				background: url("./ic_square.png");
+				background-size: .6rem .6rem;
+			}
 		}
 	}
 }
-
 
 .school-wrapper {
 	background: #fff;
@@ -252,8 +256,9 @@ export default {
 
 	.more {
 		position: absolute;
-		right: .9rem;
+		right: 0;
 		top: 0;
+		padding: 0 0.9rem;
 	}
 }
 
